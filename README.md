@@ -6,8 +6,7 @@ It is mainly meant for gaming laptops and desktop replacements, where CPU boost 
 
 > WinDozer was previously called **PowerPlanManager**.
 
-<!-- TODO: add a screenshot of the main window and of the tray icon states -->
-<!-- ![WinDozer](docs/screenshot.png) -->
+
 
 ## How it works
 
@@ -32,6 +31,12 @@ Each state has a Windows power plan assigned to it. When the state changes, the 
 - **Single instance**: launching the program again just brings up the existing window.
 - Use the **built-in managed plans** or **select any existing power plan** for each state.
 - Warns you when the new Windows 10/11 **power mode** (the slider in Settings) is not set to *Balanced*, because power plans only take effect in that mode, and offers a one-click reset.
+
+![Alt text](/Docs/WinDozer.png?raw=true "Main Page")
+
+![Alt text](/Docs/Settings.png?raw=true "Settings Page")
+
+![Alt text](/Docs/StatusSettings.png?raw=true "Status Page")
 
 ## Managed power plans
 
