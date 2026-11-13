@@ -15,7 +15,7 @@ namespace WinDozer.Pages
 	{
 
 		readonly ObservableCollection<string> idleItems = new(), balancedItems = new(), performanceItems = new();
-		readonly DispatcherTimer refreshTimer = new() { Interval = TimeSpan.FromSeconds(3) };
+		readonly DispatcherTimer refreshTimer = new() { Interval = TimeSpan.FromSeconds(10) };
 		string? dragSourceTag;
 
 
@@ -27,34 +27,60 @@ namespace WinDozer.Pages
 			IconBalanced.Glyph = WinDozer.gliphBalanced;
 			IconPerformance.Glyph = WinDozer.gliphPerformance;
 
-			
+			IdleList.ItemsSource = idleItems; 
+			BalancedList.ItemsSource = balancedItems; 
+			PerformanceList.ItemsSource = performanceItems;
 
-			IdleList.ItemsSource = idleItems; BalancedList.ItemsSource = balancedItems; PerformanceList.ItemsSource = performanceItems;
-			refreshTimer.Tick += (_, _) => Reload();
-			Loaded += (_, _) => { Reload(); refreshTimer.Start(); };
-			Unloaded += (_, _) => refreshTimer.Stop();
+			refreshTimer.Tick += (_, _) =>
+			{
+				Reload();
+			};
+			Loaded += (_, _) => 
+			{ 
+				Reload(); 
+				refreshTimer.Start(); 
+			};
+			Unloaded += (_, _) =>
+			{
+				refreshTimer.Stop();
+				idleItems.Clear();
+				balancedItems.Clear();
+				performanceItems.Clear();
+			};
 		}
 
 		void Reload()
 		{
-			if (dragSourceTag != null) return;                 // don't touch the lists mid-drag
-			if (App.WinDozer.IdleManager is not { } idle) return;
+			try
+			{
+				if (dragSourceTag != null) return;                 // don't touch the lists mid-drag
+				if (App.WinDozer.IdleManager is not { } idleManager) return;
 
-			var balanced = idle.BalancedProcessNames.ToList();
-			var performance = idle.PerformanceProcessNames.ToList();
+				var balanced = idleManager.BalancedProcessNames.ToList();
+				var performance = idleManager.PerformanceProcessNames.ToList();
 
-			var running = new HashSet<string>();   // default comparer = ordinal, same as IdleManager
-			foreach (var p in Process.GetProcesses()) { using (p) running.Add(p.ProcessName); }
-			running.ExceptWith(balanced);
-			running.ExceptWith(performance);
+				var running = new HashSet<string>();   // default comparer = ordinal, same as IdleManager
+				foreach (var p in Process.GetProcesses())
+				{
+					using (p) running.Add(p.ProcessName);
+				}
+				running.ExceptWith(balanced);
+				running.ExceptWith(performance);
 
-			var filter = IdleFilterBox.Text.Trim();
-			if (filter.Length > 0)
-				running.RemoveWhere(n => !n.Contains(filter, StringComparison.OrdinalIgnoreCase));
+				var filter = IdleFilterBox.Text.Trim();
+				if (filter.Length > 0)
+				{
+					running.RemoveWhere(n => !n.Contains(filter, StringComparison.OrdinalIgnoreCase));
+				}
 
-			Sync(idleItems, running);
-			Sync(balancedItems, balanced);
-			Sync(performanceItems, performance);
+				Sync(idleItems, running);
+				Sync(balancedItems, balanced);
+				Sync(performanceItems, performance);
+			}
+			catch(Exception ex)
+			{
+				Debug.LogError($"exception reloading process list:\n{ex}");
+			}
 		}
 
 		// updates the collection in place (sorted), so scroll position and selection survive the refresh
@@ -67,10 +93,14 @@ namespace WinDozer.Pages
 			var set = new HashSet<string>(sorted);
 
 			for (int i = col.Count - 1; i >= 0; i--)
+			{
 				if (!set.Contains(col[i])) col.RemoveAt(i);
+			}
 
 			for (int i = 0; i < sorted.Count; i++)
+			{
 				if (i >= col.Count || col[i] != sorted[i]) col.Insert(i, sorted[i]);
+			}
 		}
 
 		void List_DragItemsStarting(object sender, DragItemsStartingEventArgs e)

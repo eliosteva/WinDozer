@@ -12,6 +12,17 @@ namespace WinDozer
 		[STAThread]
 		static int Main(string[] args)
 		{
+			AppDomain.CurrentDomain.UnhandledException += (_, e) =>
+			{
+				try
+				{
+					var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ElioSoft");
+					Directory.CreateDirectory(dir);
+					File.AppendAllText(Path.Combine(dir, "crash.log"), DateTime.Now + "\n" + e.ExceptionObject + "\n\n");
+				}
+				catch { }
+			};
+
 			WinRT.ComWrappersSupport.InitializeComWrappers();
 
 			var activationArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
