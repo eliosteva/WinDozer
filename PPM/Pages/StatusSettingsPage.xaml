@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="WinDozer.Pages.StatusSettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WinDozer.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    mc:Ignorable="d">
+
+	<ScrollViewer HorizontalScrollBarVisibility="Auto">
+		<StackPanel Spacing="4" Padding="24">
+
+			<StackPanel Orientation="Horizontal" Spacing="24" Padding="24">
+				<TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Status Settings" Name="TitleText"/>
+			</StackPanel>
+
+			<controls:SettingsCard Header="PowerPlan" Description="The PowerPlan applied for this status.">
+				<ComboBox x:Name="PlanCombo" Tag="planCombo" MinWidth="260" SelectionChanged="PlanCombo_SelectionChanged"/>
+			</controls:SettingsCard>
+
+			<controls:SettingsCard Header="Processor Performance Boost Mode" Description="How the processor select a target frequency when allowed to select above maximum frequency.">
+				<ComboBox x:Name="ProcPerfBoost" Tag="procPerfBoost" MinWidth="260" SelectionChanged="ProcPerfBoost_SelectionChanged"/>
+			</controls:SettingsCard>
+				
+			<controls:SettingsCard Header="Minimum Processor State" Description="Specify the minimum performance state of your processor.">
+				<NumberBox x:Name="MinProcStateBox" 
+							Minimum="5" Maximum="100"
+							SpinButtonPlacementMode="Inline"
+							SmallChange="1" LargeChange="5"
+							ValidationMode="InvalidInputOverwritten"
+							ValueChanged="ProcStateBox_ValueChanged"/>
+			</controls:SettingsCard>
+				
+			<controls:SettingsCard Header="Maximum Processor State" Description="Specify the maximum performance state of your processor.">
+				<NumberBox x:Name="MaxProcStateBox" 
+							Minimum="5" Maximum="100"
+							SpinButtonPlacementMode="Inline"
+							SmallChange="1" LargeChange="5"
+							ValidationMode="InvalidInputOverwritten"
+							ValueChanged="ProcStateBox_ValueChanged"/>
+			</controls:SettingsCard>
+				
+			<controls:SettingsCard Header="Display Timeout" Description="Minutes before the screen is turned off (0 to disable).">
+				<NumberBox x:Name="DisplayTimeoutBox" 
+							Minimum="0" Maximum="600"
+							SpinButtonPlacementMode="Inline"
+							SmallChange="1" LargeChange="5"
+							ValidationMode="InvalidInputOverwritten"
+							ValueChanged="Timeouts_ValueChanged"/>
+			</controls:SettingsCard>
+			
+			<controls:SettingsCard Header="Sleep Timeout" Description="Minutes before the computer is put to sleep (0 to disable).">
+				<NumberBox x:Name="SleepTimeoutBox" 
+							Minimum="0" Maximum="600"
+							SpinButtonPlacementMode="Inline"
+							SmallChange="1" LargeChange="5"
+							ValidationMode="InvalidInputOverwritten"
+							ValueChanged="Timeouts_ValueChanged"/>
+			</controls:SettingsCard>
+			
+			<controls:SettingsCard Header="Hibernation Timeout" Description="Minutes before the computer is hibernated (0 to disable).">
+				<NumberBox x:Name="HibernationTimeoutBox" 
+							Minimum="0" Maximum="600"
+							SpinButtonPlacementMode="Inline"
+							SmallChange="1" LargeChange="5"
+							ValidationMode="InvalidInputOverwritten"
+							ValueChanged="Timeouts_ValueChanged"/>
+			</controls:SettingsCard>
+
+		</StackPanel>
+	</ScrollViewer>
+</Page>

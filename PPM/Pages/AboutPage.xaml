@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="WinDozer.Pages.AboutPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:WinDozer.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+	<StackPanel Spacing="12" Padding="24" MaxWidth="640" HorizontalAlignment="Left">
+		<TextBlock Text="WinDozer" Style="{StaticResource TitleTextBlockStyle}"/>
+		
+		<TextBlock TextWrapping="Wrap" Text="WinDozer switches your Windows power plan automatically, so your computer stays cool and quiet when you don't need the power, and fast when you do."/>
+		<TextBlock TextWrapping="Wrap" Text="It watches which programs are running and whether you are at the keyboard. Programs on your Performance list get full performance, programs on your Balanced list get a balanced plan, and after a while without input, or when the screensaver starts, WinDozer drops to an economical Idle plan. You choose the power plan for each state, manage the program lists with drag and drop, and can force a state manually at any time."/>
+		<TextBlock TextWrapping="Wrap" Text="It keeps running in the background and lives in the system tray. The tray icon shows the current state, and you can open this window at any time or force a state manually."/>
+		<TextBlock TextWrapping="Wrap" Text="Tip: Windows only applies power plans while the power mode is set to Balanced. If it is not, a warning appears on the status page."/>
+
+		<TextBlock Text="Free software released under the GPL-3.0 license. Provided as is, without warranty, use at your own risk." TextWrapping="Wrap" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+		<TextBlock x:Name="VersionText" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+		<HyperlinkButton Content="Source code and documentation on GitHub" NavigateUri="https://github.com/eliosteva/WinDozer"/>
+	</StackPanel>
+	
+</Page>

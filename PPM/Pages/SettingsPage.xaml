@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="WinDozer.Pages.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:WinDozer.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+	xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+	>
+
+	<ScrollViewer HorizontalScrollBarVisibility="Auto">
+		<StackPanel Spacing="4" Padding="24">
+
+			<StackPanel Orientation="Horizontal" Spacing="24" Padding="24">
+				<TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Settings"/>
+			</StackPanel>
+
+
+
+			<controls:SettingsCard Header="Start with windows" Description="Launch the program on startup.">
+				<ToggleSwitch x:Name="StartupToggle" OnContent="" OffContent="" Toggled="StartupToggle_Toggled"/>
+			</controls:SettingsCard>
+
+			<controls:SettingsCard Header="Idle on screensaver" Description="Automatically switch to idle while the screensaver is running.">
+				<ToggleSwitch x:Name="ScreensaverToggle" OnContent="" OffContent="" Toggled="ScreensaverToggle_Toggled"/>
+			</controls:SettingsCard>
+
+			<controls:SettingsCard Header="Idle on inactive" Description="Enable the user inactivity timer (keyboard, mouse, etc).">
+				<ToggleSwitch x:Name="ActivityToggle" OnContent="" OffContent="" Toggled="ActivityToggle_Toggled"/>
+			</controls:SettingsCard>
+
+			<controls:SettingsCard Header="Inactivity" Description="Seconds of inactivity since last user input after which the status becomes idle.">
+				<NumberBox x:Name="InactivityBox" 
+				   Minimum="5" Maximum="600"
+				   SpinButtonPlacementMode="Inline"
+				   SmallChange="1" LargeChange="5"
+				   ValidationMode="InvalidInputOverwritten"
+				   ValueChanged="InactivityBox_ValueChanged"/>
+			</controls:SettingsCard>
+
+			<controls:SettingsCard Header="PollingInterval" Description="Seconds between status updates.">
+				<NumberBox x:Name="PollingBox" 
+				   Minimum="2" Maximum="600"
+				   SpinButtonPlacementMode="Inline"
+				   SmallChange="1" LargeChange="5"
+				   ValidationMode="InvalidInputOverwritten"
+				   ValueChanged="PollingBox_ValueChanged"/>
+			</controls:SettingsCard>
+
+			<controls:SettingsCard Header="Idle Settings" Description="Power plan and CPU settings for the Idle state" IsClickEnabled="True" Click="IdleSettings_Click">
+				<controls:SettingsCard.HeaderIcon>
+					<FontIcon Glyph="&#xE708;" Name="IconIdle"/>
+				</controls:SettingsCard.HeaderIcon>
+			</controls:SettingsCard>
+
+			<controls:SettingsCard Header="Balanced Settings" Description="Power plan and CPU settings for the Balanced state" IsClickEnabled="True" Click="BalancedSettings_Click">
+				<controls:SettingsCard.HeaderIcon>
+					<FontIcon Glyph="&#xE708;" Name="IconBalanced"/>
+				</controls:SettingsCard.HeaderIcon>
+			</controls:SettingsCard>
+
+			<controls:SettingsCard Header="Performance Settings" Description="Power plan and CPU settings for the Performance state" IsClickEnabled="True" Click="PerformanceSettings_Click">
+				<controls:SettingsCard.HeaderIcon>
+					<FontIcon Glyph="&#xE708;" Name="IconPerformance"/>
+				</controls:SettingsCard.HeaderIcon>
+			</controls:SettingsCard>
+
+			<!--<controls:SettingsCard Header="Idle PowerPlan" Description="The PowerPlan applied when status is Idle.">
+				<controls:SettingsCard.HeaderIcon>
+					<FontIcon x:Name="IconIdle" Glyph="&#xEC48;"/>
+				</controls:SettingsCard.HeaderIcon>
+				<ComboBox x:Name="IdlePlanCombo" Tag="idle" MinWidth="260" SelectionChanged="PlanCombo_SelectionChanged"/>
+			</controls:SettingsCard>
+			
+			<controls:SettingsCard Header="Balanced PowerPlan" Description="The PowerPlan applied when status is Balanced.">
+				<controls:SettingsCard.HeaderIcon>
+					<FontIcon x:Name="IconBalanced" Glyph="&#xEC49;"/>
+				</controls:SettingsCard.HeaderIcon>
+				<ComboBox x:Name="BalancedPlanCombo" Tag="balanced" MinWidth="260" SelectionChanged="PlanCombo_SelectionChanged"/>
+			</controls:SettingsCard>
+
+			<controls:SettingsCard Header="Performance PowerPlan" Description="The PowerPlan applied when status is Performance.">
+				<controls:SettingsCard.HeaderIcon>
+					<FontIcon x:Name="IconPerformance" Glyph="&#xEC4A;"/>
+				</controls:SettingsCard.HeaderIcon>
+				<ComboBox x:Name="PerformancePlanCombo" Tag="performance" MinWidth="260" SelectionChanged="PlanCombo_SelectionChanged"/>
+			</controls:SettingsCard>-->
+
+		</StackPanel>
+	</ScrollViewer>
+</Page>
