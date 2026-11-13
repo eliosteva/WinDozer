@@ -489,8 +489,8 @@ namespace WinDozer
 			}
 
 			// if the app is currently in that status, switch to the new plan right away
-			if (App.WinDozer.PowerPlanManager is not { } plans || App.WinDozer.IdleManager is not { } idle) return;
-			if (idle.CurrentStatus == status) plans.ApplyPowerPlanForStatus(status);
+			if (App.WinDozer.PowerPlanManager is not { } ppm || App.WinDozer.IdleManager is not { } idleManager) return;
+			if (idleManager.CurrentStatus == status) ppm.ApplyPowerPlanForStatus(status);
 
 			Save();
 		}
@@ -508,28 +508,35 @@ namespace WinDozer
 
 		void ApplyPowerPlan(PowerPlanWrapper plan)
 		{
-			// must have plan
-			if (plan == null)
+			try
 			{
-				Debug.LogError("cannot apply PowerPlan: target plan is null");
-				return;
+				// must have plan
+				if (plan == null)
+				{
+					Debug.LogError("cannot apply PowerPlan: target plan is null");
+					return;
+				}
+
+				// must be different
+				if (PowerPlansApiWrapper.GetActivePlan() == plan.guid)
+				{
+					//Debug.LogWarning("cannot apply PowerPlan: plan " + plan.name + " is already active");
+					return;
+				}
+
+				// apply
+				Debug.LogWarning($"applying PowerPlan: {plan.name}");
+				PowerPlansApiWrapper.SetActivePlan(plan.guid);
+
+				// check
+				if (PowerPlansApiWrapper.GetActivePlan() != plan.guid)
+				{
+					Debug.LogError($"failed to apply PowerPlan {plan.guid}, current is {PowerPlansApiWrapper.GetActivePlan()}");
+				}
 			}
-
-			// must be different
-			if (PowerPlansApiWrapper.GetActivePlan() == plan.guid)
+			catch (Exception ex)
 			{
-				//Debug.LogWarning("cannot apply PowerPlan: plan " + plan.name + " is already active");
-				return;
-			}
-
-			// apply
-			Debug.LogWarning("applying PowerPlan: " + plan.name);
-			PowerPlansApiWrapper.SetActivePlan(plan.guid);
-
-			// check
-			if (PowerPlansApiWrapper.GetActivePlan() != plan.guid)
-			{
-				Debug.LogError("failed to apply PowerPlan " + plan.guid + ", current is " + PowerPlansApiWrapper.GetActivePlan());
+				Debug.LogError($"exception applying power plan: {plan}\n{ex}");
 			}
 		}
 

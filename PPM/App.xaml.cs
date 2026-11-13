@@ -32,6 +32,11 @@ namespace WinDozer
 		{
 			InitializeComponent();
 			uiDispatcher = DispatcherQueue.GetForCurrentThread();
+
+			UnhandledException += (_, e) => Debug.LogError("UI unhandled: " + e.Exception);
+			AppDomain.CurrentDomain.UnhandledException += (_, e) => Debug.LogError("AppDomain unhandled: " + e.ExceptionObject);
+			TaskScheduler.UnobservedTaskException += (_, e) => Debug.LogError("Unobserved task: " + e.Exception);
+			AppDomain.CurrentDomain.ProcessExit += (_, _) => Debug.Log("process exiting");
 		}
 
 		protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
@@ -62,6 +67,7 @@ namespace WinDozer
 				{
 					// override window close and just hide it
 					if (isExiting) return;
+					Debug.Log("hiding window");
 					e.Cancel = true;
 					w.AppWindow.Hide();
 				};
@@ -135,6 +141,7 @@ namespace WinDozer
 
 		void ExitApp()
 		{
+			Debug.Log("exit requested from tray menu");
 			isExiting = true;
 			tray?.Dispose();
 			WinDozer.Dispose();

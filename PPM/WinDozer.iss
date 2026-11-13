@@ -1,6 +1,6 @@
 [Setup]
 AppName=WinDozer
-AppVersion=0.8
+AppVersion=0.8.1
 AppPublisher=ElioSoft
 DefaultDirName={localappdata}\ElioSoft\WinDozer
 DefaultGroupName=WinDozer

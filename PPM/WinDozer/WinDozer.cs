@@ -51,11 +51,8 @@ namespace WinDozer
 
 		async Task RunAsync()
 		{
-			// start dirs
-			if (!Directory.Exists(WinDozer.AppdataDirPath)) Directory.CreateDirectory(WinDozer.AppdataDirPath);
-			
 			// start components
-			Debug.Initialize(AppdataLogFilePath);
+			Debug.Initialize();
 			Debug.Log(" ====================== started");
 			try
 			{

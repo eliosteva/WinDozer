@@ -10,7 +10,8 @@ namespace WinDozer
 		const int MaxMessages = 500;          // messages kept in memory
 		const long MaxLogSizeBytes = 10 * 1024 * 1024;  // 10 MB
 
-		static string logFilePath;
+		static readonly string logDirPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), WinDozer.CompanyName);
+		static readonly string logFilePath = Path.Combine(logDirPath, WinDozer.ProgramName, WinDozer.ProgramName + ".log");
 		static string Now => DateTime.Now.ToString("yyyy/MM/dd - HH:mm");
 
 		public delegate void StringEventHandler(string message);
@@ -22,13 +23,15 @@ namespace WinDozer
 
 		private readonly static object _lockObject = new object();
 
-		public static void Initialize(string path)
+		public static void Initialize()
 		{
-			logFilePath = path;
+			// start dirs
+			if (!Directory.Exists(logDirPath)) Directory.CreateDirectory(logDirPath);
+
 			RotateIfNeeded();
 		}
 
-		public static void Log(string message) => WriteLog("DEBUG", message);
+		public static void Log(string message) => WriteLog("INFO", message);
 		public static void LogError(string message) => WriteLog("ERROR", message);
 		public static void LogWarning(string message) => WriteLog("WARNING", message);
 
